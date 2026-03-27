@@ -57,6 +57,20 @@
         
         .text-shadow { text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
     </style>
+
+    <!-- Extra styles for modal animations and gallery -->
+    <style>
+        .thumbnail-item {
+            transition: all 0.3s ease;
+        }
+        .modal-content-enter {
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body class="text-white antialiased selection:bg-luxury-red selection:text-white">
 
@@ -73,7 +87,7 @@
                 
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="#inventory" class="hover:text-luxury-red transition-colors text-sm tracking-widest uppercase">Collection</a>
+                        <button onclick="openInventoryModal()" class="hover:text-luxury-red transition-colors text-sm tracking-widest uppercase">Collection</button>
                         <button onclick="openContactModal()" class="px-6 py-2 border border-white/30 hover:bg-white hover:text-black transition-all duration-300 text-sm tracking-widest uppercase">Contact</button>
                     </div>
                 </div>
@@ -88,7 +102,7 @@
 
         <div id="mobile-menu" class="hidden md:hidden bg-black/95 backdrop-blur-xl border border-white/10 absolute w-48 right-4 top-20 shadow-2xl rounded-lg">
             <div class="px-4 py-4 space-y-4 flex flex-col text-center">
-                <a href="#inventory" onclick="toggleMobileMenu()" class="block text-white hover:text-luxury-red text-sm tracking-widest uppercase py-2 border-b border-white/10">Collection</a>
+                <button onclick="handleMobileInventoryClick()" class="block w-full text-white hover:text-luxury-red text-sm tracking-widest uppercase py-2 border-b border-white/10">Collection</button>
                 <button onclick="handleMobileContactClick()" class="block w-full text-white hover:text-luxury-red text-sm tracking-widest uppercase py-2">Contact</button>
                 <div class="pt-4 mt-auto border-t border-white/10 flex justify-center items-center space-x-6">
                     <a href="https://www.instagram.com/kenjapmotors/" target="_blank" rel="noopener noreferrer" class="text-white/60 hover:text-white text-xl transition-colors"><i class="fab fa-instagram"></i></a>
@@ -110,8 +124,7 @@
                     Premium vehicles sourced globally. Delivered to your doorstep in Kenya.
                 </p>
                 <div class="pt-10">
-                    <button onclick="document.getElementById('inventory').scrollIntoView({behavior: 'smooth'})" 
-                        class="group relative px-8 py-4 overflow-hidden bg-transparent border border-white/40 text-white shadow-lg transition-all duration-300 hover:border-luxury-red rounded-sm active:scale-95">
+                    <button onclick="openInventoryModal()" class="group relative px-8 py-4 overflow-hidden bg-transparent border border-white/40 text-white shadow-lg transition-all duration-300 hover:border-luxury-red rounded-sm active:scale-95">
                         <span class="absolute inset-0 w-full h-full bg-luxury-red opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out"></span>
                         <span class="relative flex items-center gap-3 tracking-widest uppercase text-sm font-semibold">
                             Explore Fleet <i class="fas fa-arrow-down group-hover:translate-y-1 transition-transform"></i>
@@ -121,19 +134,10 @@
             </div>
         </section>
 
+        <!-- Gradient Transition -->
         <div class="h-32 bg-gradient-to-b from-transparent to-luxury-black"></div>
 
-        <section id="inventory" class="bg-luxury-black min-h-screen py-20 px-4 md:px-10 relative">
-            <div class="max-w-7xl mx-auto mb-20 text-center">
-                <h2 class="font-serif text-3xl md:text-5xl mb-4">Curated Inventory</h2>
-                <div class="h-1 w-24 bg-luxury-red mx-auto"></div>
-                <p class="text-gray-400 mt-4 font-light text-sm md:text-base">Select vehicles available for immediate viewing.</p>
-            </div>
-
-            <div id="car-grid" class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-24 md:gap-y-32 pt-10">
-                </div>
-        </section>
-
+        <!-- Footer -->
         <footer class="bg-black py-16 border-t border-white/10">
             <div class="max-w-7xl mx-auto px-6 text-center">
                 <div class="mb-6">
@@ -141,13 +145,45 @@
                     <p class="text-gray-500 text-xs mt-2 uppercase tracking-wide">Nairobi, Kenya</p>
                 </div>
                 <div class="text-gray-600 text-[10px] uppercase tracking-widest">
-                    &copy; 2026 KENJAP. All rights reserved.
+                    &copy; 2024 KENJAP. All rights reserved.
                 </div>
             </div>
         </footer>
 
     </main>
 
+    <!-- Inventory Overlay (Modal) -->
+    <div id="inventory-overlay" class="fixed inset-0 z-[100] hidden" aria-labelledby="inventory-modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-black/90 backdrop-blur-sm transition-opacity" onclick="closeInventoryModal()"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+            <div class="flex min-h-full items-start justify-center p-4 text-center">
+                <div class="relative transform overflow-hidden bg-zinc-900 border border-white/10 text-left shadow-2xl transition-all w-full max-w-7xl rounded-lg p-6 md:p-8 mt-16 md:mt-20">
+                    <button onclick="closeInventoryModal()" class="absolute top-4 right-4 z-50 text-white hover:text-luxury-red transition-colors bg-black/50 rounded-full p-3 w-12 h-12 flex items-center justify-center active:scale-95">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+
+                    <h2 id="inventory-modal-title" class="font-serif text-3xl md:text-5xl text-white mb-4 text-center">Curated Inventory</h2>
+                    <div class="h-1 w-24 bg-luxury-red mx-auto mb-10"></div>
+                    <p class="text-gray-400 mt-4 font-light text-sm md:text-base text-center mb-10">Select vehicles available for immediate viewing.</p>
+
+                    <div class="flex flex-col md:flex-row justify-center items-center gap-4 mb-12">
+                        <input type="text" id="car-search" placeholder="Search by model..." class="w-full md:w-1/3 p-3 bg-zinc-800 border border-white/10 rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-luxury-red transition-colors text-sm">
+                        <select id="car-brand-filter" class="w-full md:w-1/6 p-3 bg-zinc-800 border border-white/10 rounded-md text-white focus:outline-none focus:border-luxury-red transition-colors text-sm">
+                            <option value="">All Brands</option>
+                            <!-- Brands will be populated by JS -->
+                        </select>
+                        <!-- Add more filters here if needed (e.g., transmission) -->
+                    </div>
+
+                    <div id="car-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-24 md:gap-y-32 pt-10">
+                        <!-- Car cards will be injected here by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Overlay (Modal) -->
     <div id="contact-overlay" class="fixed inset-0 z-[100] hidden" aria-labelledby="contact-modal-title" role="dialog" aria-modal="true">
         <div class="fixed inset-0 bg-black/90 backdrop-blur-sm transition-opacity" onclick="closeContactModal()"></div>
         <div class="fixed inset-0 z-10 overflow-y-auto">
@@ -181,57 +217,59 @@
     <div id="carModal" class="fixed inset-0 z-[100] hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
         <div class="fixed inset-0 bg-black/90 backdrop-blur-sm transition-opacity" onclick="closeModal()"></div>
         <div class="fixed inset-0 z-10 overflow-y-auto">
-            <div class="flex min-h-full items-end md:items-center justify-center p-0 md:p-4 text-center sm:p-0">
-                <div class="relative transform overflow-hidden bg-zinc-900 border-t md:border border-white/10 text-left shadow-2xl transition-all w-full h-[90vh] md:h-auto md:max-w-6xl md:rounded-lg flex flex-col md:flex-row">
+            <div class="flex min-h-full items-center justify-center p-4 text-center">
+                <div id="car-modal-content" class="relative transform overflow-hidden bg-zinc-900 border border-white/10 text-left shadow-2xl transition-all w-full max-w-4xl rounded-lg flex flex-col">
                     <button onclick="closeModal()" class="absolute top-4 right-4 z-50 text-white hover:text-luxury-red transition-colors bg-black/50 rounded-full p-3 w-12 h-12 flex items-center justify-center active:scale-95">
                         <i class="fas fa-times text-xl"></i>
                     </button>
                     
-                    <div class="w-full md:w-2/3 bg-black relative flex items-center justify-center group h-[35vh] md:h-[600px]">
+                    <div class="p-8 md:p-10 text-center border-b border-white/10">
+                        <p class="text-luxury-red text-xs uppercase tracking-widest font-bold mb-2">Available Now</p>
+                        <h2 id="modal-title" class="font-serif text-3xl md:text-5xl text-white mb-2 leading-tight"></h2>
+                        <div class="my-4">
+                            <p id="modal-price-ksh" class="text-xl md:text-2xl font-bold text-white"></p>
+                            <p id="modal-price-usd" class="text-xs text-gray-400"></p>
+                        </div>
+                    </div>
+
+                    <div class="w-full bg-black relative flex items-center justify-center group h-[40vh] md:h-[500px]">
                         <img id="modal-img" src="" alt="Car Detail" class="max-h-full max-w-full object-contain transition-opacity duration-300">
                         <button onclick="changeSlide(-1)" class="absolute left-2 md:left-4 bg-white/10 hover:bg-white/30 text-white p-4 rounded-full backdrop-blur-md transition-all active:scale-90"><i class="fas fa-chevron-left text-lg"></i></button>
                         <button onclick="changeSlide(1)" class="absolute right-2 md:right-4 bg-white/10 hover:bg-white/30 text-white p-4 rounded-full backdrop-blur-md transition-all active:scale-90"><i class="fas fa-chevron-right text-lg"></i></button>
                     </div>
 
-                    <div class="w-full md:w-1/3 p-6 md:p-8 flex flex-col justify-between bg-zinc-900 overflow-y-auto">
+                    <div id="thumbnail-gallery" class="flex justify-center gap-2 p-4 bg-black/50 border-y border-white/5">
+                        <!-- Thumbnails will be injected here -->
+                    </div>
+
+                    <div class="p-8 md:p-10 flex flex-col justify-between bg-zinc-900">
                         <div>
-                            <p class="text-luxury-red text-xs uppercase tracking-widest font-bold mb-2">Available Now</p>
-                            <h2 id="modal-title" class="font-serif text-2xl md:text-4xl text-white mb-2 leading-none"></h2>
-                            <div class="my-4 md:my-6 border-l-2 border-luxury-red pl-4">
-                                <p id="modal-price-ksh" class="text-lg md:text-2xl font-bold text-white"></p>
-                                <p id="modal-price-usd" class="text-xs text-gray-400"></p>
-                            </div>
-                            
-                            <p id="modal-desc" class="text-gray-400 text-xs md:text-sm leading-relaxed mb-6"></p>
+                            <p id="modal-desc" class="text-gray-300 text-sm md:text-base leading-relaxed mb-8 max-w-3xl mx-auto text-center"></p>
 
-                            <div class="grid grid-cols-4 gap-2 md:gap-4 mb-6 text-center">
-                                <div class="bg-black/40 p-2 rounded border border-white/5">
-                                    <i class="fas fa-calendar text-luxury-red mb-1 block text-sm"></i>
-                                    <p class="text-[8px] text-gray-500 uppercase">Year</p>
-                                    <p id="spec-year" class="text-[10px] md:text-xs font-bold text-white"></p>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8 text-center max-w-2xl mx-auto">
+                                <div class="bg-black/40 p-3 rounded-lg border border-white/5">
+                                    <p class="text-xs text-gray-500 uppercase">Year</p>
+                                    <p id="spec-year" class="text-base font-bold text-white mt-1"></p>
                                 </div>
-                                <div class="bg-black/40 p-2 rounded border border-white/5">
-                                    <i class="fas fa-tachometer-alt text-luxury-red mb-1 block text-sm"></i>
-                                    <p class="text-[8px] text-gray-500 uppercase">Mileage</p>
-                                    <p id="spec-mileage" class="text-[10px] md:text-xs font-bold text-white"></p>
+                                <div class="bg-black/40 p-3 rounded-lg border border-white/5">
+                                    <p class="text-xs text-gray-500 uppercase">Mileage</p>
+                                    <p id="spec-mileage" class="text-base font-bold text-white mt-1"></p>
                                 </div>
-                                <div class="bg-black/40 p-2 rounded border border-white/5">
-                                    <i class="fas fa-cogs text-luxury-red mb-1 block text-sm"></i>
-                                    <p class="text-[8px] text-gray-500 uppercase">Trans</p>
-                                    <p id="spec-trans" class="text-[10px] md:text-xs font-bold text-white"></p>
+                                <div class="bg-black/40 p-3 rounded-lg border border-white/5">
+                                    <p class="text-xs text-gray-500 uppercase">Trans</p>
+                                    <p id="spec-trans" class="text-base font-bold text-white mt-1"></p>
                                 </div>
-                                <div class="bg-black/40 p-2 rounded border border-white/5">
-                                    <i class="fas fa-gas-pump text-luxury-red mb-1 block text-sm"></i>
-                                    <p class="text-[8px] text-gray-500 uppercase">Engine</p>
-                                    <p id="spec-engine" class="text-[10px] md:text-xs font-bold text-white"></p>
+                                <div class="bg-black/40 p-3 rounded-lg border border-white/5">
+                                    <p class="text-xs text-gray-500 uppercase">Engine</p>
+                                    <p id="spec-engine" class="text-base font-bold text-white mt-1"></p>
                                 </div>
                             </div>
 
-                            <h4 class="text-white text-xs uppercase tracking-wider mb-2 font-semibold">Key Features</h4>
-                            <ul id="modal-features" class="grid grid-cols-2 gap-y-1 gap-x-2 text-[10px] md:text-xs text-gray-400 mb-6"></ul>
+                            <h4 class="text-white text-sm uppercase tracking-widest mb-4 font-semibold text-center">Key Features</h4>
+                            <ul id="modal-features" class="columns-2 md:columns-3 gap-x-8 text-sm text-gray-300 mb-8 max-w-3xl mx-auto"></ul>
                         </div>
 
-                        <div class="flex flex-col gap-3 mt-auto">
+                        <div class="flex flex-col md:flex-row gap-3 mt-auto max-w-lg mx-auto w-full">
                             <a id="whatsapp-btn" href="#" target="_blank" class="w-full bg-whatsapp-green text-white py-4 rounded-sm uppercase tracking-widest text-xs font-bold hover:brightness-110 transition-all duration-300 text-center flex items-center justify-center gap-2 active:scale-95 shadow-lg">
                                 <i class="fab fa-whatsapp text-lg"></i> Chat on WhatsApp
                             </a>
@@ -246,6 +284,10 @@
     </div>
 
     <script>
+        // Global state to track open modals
+        let isContactModalOpen = false;
+        let isInventoryModalOpen = false;
+        let isCarDetailModalOpen = false;
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             const icon = document.querySelector('#mobile-menu-button i');
@@ -259,20 +301,30 @@
             }
         }
 
+        function updateBodyScroll() {
+            if (isContactModalOpen || isInventoryModalOpen || isCarDetailModalOpen) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+        }
+
         // --- Contact Modal Logic ---
         const contactOverlay = document.getElementById('contact-overlay');
 
         function openContactModal() {
             if (contactOverlay) {
                 contactOverlay.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
+                isContactModalOpen = true;
+                updateBodyScroll();
             }
         }
 
         function closeContactModal() {
             if (contactOverlay) {
                 contactOverlay.classList.add('hidden');
-                document.body.style.overflow = 'auto';
+                isContactModalOpen = false;
+                updateBodyScroll();
             }
         }
 
@@ -281,82 +333,127 @@
             setTimeout(openContactModal, 150); // Timeout for smoother transition
         }
 
+        // --- Inventory Modal Logic ---
+        const inventoryOverlay = document.getElementById('inventory-overlay');
+
+        function openInventoryModal() {
+            renderCarGrid(cars); // Render all cars when modal opens
+            if (inventoryOverlay) {
+                inventoryOverlay.classList.remove('hidden');
+                isInventoryModalOpen = true;
+                updateBodyScroll();
+            }
+        }
+
+        function closeInventoryModal() {
+            if (inventoryOverlay) {
+                inventoryOverlay.classList.add('hidden');
+                resetFilters(); // Reset filters when closing
+                isInventoryModalOpen = false;
+                updateBodyScroll();
+            }
+        }
+        function handleMobileInventoryClick() {
+            toggleMobileMenu();
+            setTimeout(openInventoryModal, 150);
+        }
+
+        // --- Car Data and Grid/Modal Logic ---
         const cars = [
             {
                 id: 1,
                 title: "Mercedes-AMG G63",
+                make: "Mercedes-Benz",
                 priceKsh: "KSH 38,500,000",
                 priceUsd: "$265,000 USD",
                 desc: "Command the road with the G63. Features the Night Package, 22-inch forged wheels, and diamond-stitched Nappa leather.",
                 cardImage: "images/gwagonhome (2).png",
                 isTransparent: true,
                 images: ["images/GWAGON 1 (1).jpeg", "images/GWAGON 1 (2).jpeg", "images/GWAGON 1 (3).jpeg"],
-                features: ["V8 Biturbo", "Burmester Sound", "360° Cam", "Massage Seats"],
+                features: ["V8 Biturbo", "Burmester Sound System", "360° Camera", "Massage Seats"],
                 specs: { year: "2021", mileage: "3,500 kms", trans: "Automatic", engine: "4.0L V8" }
             },
             {
                 id: 4,
                 title: "Mercedes-Benz S63 AMG",
+                make: "Mercedes-Benz",
                 priceKsh: "KSH 14,151,450",
                 priceUsd: "$98,500 USD",
                 desc: "The pinnacle of performance luxury. The S63 AMG offers unmatched comfort with earth-shattering power.",
                 cardImage: "images/MBS63HM.png",
                 isTransparent: true, 
                 images: ["images/MBS63 (1).jpg", "images/MBS63 (2).jpg", "images/MBS63 (3).jpg", "images/MBS63 (4).jpg"],
-                features: ["Executive Rear", "Magic Body Control", "Burmester 3D", "Heads-Up Display"],
+                features: ["Executive Rear Seats", "Magic Body Control", "Burmester 3D Sound", "Heads-Up Display"],
                 specs: { year: "2019", mileage: "28,000 kms", trans: "Automatic", engine: "4.0L V8" }
             },
             {
                 id: 5,
                 title: "VW Arteon R-Line",
+                make: "Volkswagen",
                 priceKsh: "KSH 6,278,750",
                 priceUsd: "$43,500 USD",
                 desc: "The avant-garde Gran Turismo. This Arteon R-Line combines a sleek fastback silhouette with dynamic performance.",
                 cardImage: "images/VWSHM.png",
                 isTransparent: true, 
                 images: [
-                    "images/VWS (1).jpg", "images/VWS (2).jpg", "images/VWS (3).jpg", 
+                    "images/VWS (1).jpg", "images/VWS (2).jpg", "images/VWS (3).jpg",
                     "images/VWS (4).jpg", "images/VWS (5).jpg", "images/VWS (6).jpg",
                     "images/VWS (7).jpg", "images/VWS (8).jpg", "images/VWS (9).jpg"
                 ],
-                features: ["R-Line Styling", "4MOTION", "Digital Cockpit", "Panoramic Roof"],
+                features: ["R-Line Styling Package", "4MOTION All-Wheel Drive", "Digital Cockpit Pro", "Panoramic Sunroof"],
                 specs: { year: "2021", mileage: "74,200 kms", trans: "Automatic", engine: "2.0L TSI" }
             },
             {
                 id: 6,
                 title: "BMW M3 Competition",
+                make: "BMW",
                 priceKsh: "KSH 11,400,000",
                 priceUsd: "$79,000 USD",
                 desc: "The icon of sports sedans. The M3 Competition delivers track-ready performance with aggressive styling.",
                 cardImage: "images/BMWM3HM (1).png",
                 isTransparent: true, 
                 images: ["images/BMWM3 (1).jpg", "images/BMWM3 (2).jpg", "images/BMWM3 (3).jpg"],
-                features: ["M xDrive", "Carbon Bucket Seats", "Laser Lights", "Harman Kardon"],
+                features: ["M xDrive System", "Carbon Bucket Seats", "Laser Lights", "Harman Kardon Sound System"],
                 specs: { year: "2021", mileage: "15,000 kms", trans: "Automatic", engine: "3.0L I6" }
             }
         ];
 
         const grid = document.getElementById('car-grid');
-        cars.forEach((car, index) => {
+        const carSearchInput = document.getElementById('car-search');
+        const carBrandFilter = document.getElementById('car-brand-filter');
+
+        // Function to render cars into the grid
+        function renderCarGrid(carsToRender) {
+            grid.innerHTML = ''; // Clear existing cars
+            if (carsToRender.length === 0) {
+                grid.innerHTML = '<p class="col-span-full text-center text-gray-400 text-lg py-10">No vehicles found matching your criteria.</p>';
+                return;
+            }
+
+            carsToRender.forEach((car, index) => {
             const div = document.createElement('div');
             div.className = "group relative mt-16 md:mt-16"; 
             
             let imgStyle = "";
             let containerPadding = "";
             let imgPosition = "";
+            // Use the original index from the 'cars' array for openModal
+            const originalIndex = cars.findIndex(c => c.id === car.id);
 
             if(car.isTransparent) {
                 imgStyle = "w-full h-44 md:h-48 object-contain drop-shadow-2xl transform scale-100 group-hover:scale-110 transition-transform duration-500";
                 imgPosition = "-top-16 md:-top-20"; 
                 containerPadding = "pt-28 md:pt-32";
             } else {
+                // This else block seems to be for non-transparent images, but all current cars are transparent.
+                // If you add non-transparent images, ensure they are styled appropriately.
                 imgStyle = "w-full h-44 md:h-48 object-cover rounded-xl shadow-2xl shadow-black/50 group-hover:scale-105 transition-transform duration-500";
                 imgPosition = "-top-14 md:-top-18";
                 containerPadding = "pt-28 md:pt-32";
             }
 
             div.innerHTML = `
-                <div class="h-full bg-zinc-900/40 backdrop-blur-md border border-white/10 rounded-2xl p-6 ${containerPadding} relative hover:bg-zinc-900/60 hover:border-luxury-red/50 transition-all duration-300">
+                <div class="h-full bg-zinc-900/40 backdrop-blur-md border border-white/10 rounded-2xl p-6 ${containerPadding} relative hover:bg-zinc-900/60 hover:border-luxury-red/50 transition-all duration-300 cursor-pointer" onclick="openModal(${originalIndex})">
                     
                     <div class="absolute ${imgPosition} left-1/2 transform -translate-x-1/2 w-[90%] z-20 transition-transform duration-500 group-hover:-translate-y-4">
                         <img src="${car.cardImage}" alt="${car.title}" class="${imgStyle}">
@@ -373,7 +470,7 @@
                                 <p class="text-gray-500 text-[10px] uppercase tracking-wider">Price</p>
                                 <p class="text-white font-bold text-xs md:text-sm">${car.priceKsh}</p>
                              </div>
-                             <button onclick="openModal(${index})" class="text-[10px] uppercase font-bold tracking-widest text-white border-b border-white/30 pb-1 hover:text-luxury-red hover:border-luxury-red transition-all">
+                             <button class="text-[10px] uppercase font-bold tracking-widest text-white border-b border-white/30 pb-1 hover:text-luxury-red hover:border-luxury-red transition-all">
                                 View Specs
                              </button>
                         </div>
@@ -381,12 +478,14 @@
                 </div>
             `;
             grid.appendChild(div);
-        });
+            });
+        }
 
         let currentIndex = 0;
         let imgIndex = 0;
         const modal = document.getElementById('carModal');
         const modalImg = document.getElementById('modal-img');
+        const modalContent = document.getElementById('car-modal-content');
 
         function openModal(idx) {
             currentIndex = idx;
@@ -401,24 +500,38 @@
             document.getElementById('spec-mileage').innerText = car.specs.mileage;
             document.getElementById('spec-trans').innerText = car.specs.trans;
             document.getElementById('spec-engine').innerText = car.specs.engine;
-
+            
             const waNumber = "254700000000"; 
             const message = encodeURIComponent(`Hello, I am interested in the ${car.title} listed on KENJAP.`);
             document.getElementById('whatsapp-btn').href = `https://wa.me/${waNumber}?text=${message}`;
-
+            
+            const thumbnailGallery = document.getElementById('thumbnail-gallery');
+            thumbnailGallery.innerHTML = '';
+            car.images.forEach((imgSrc, i) => {
+                const thumb = document.createElement('img');
+                thumb.src = imgSrc;
+                thumb.className = 'thumbnail-item w-20 h-12 object-cover rounded cursor-pointer border-2';
+                thumb.onclick = () => selectImage(i);
+                thumbnailGallery.appendChild(thumb);
+            });
+            
             const feats = document.getElementById('modal-features');
             feats.innerHTML = '';
             car.features.forEach(f => {
-                feats.innerHTML += `<li class="flex items-center gap-2"><i class="fas fa-check text-luxury-red"></i> ${f}</li>`;
+                feats.innerHTML += `<li class="flex items-center gap-3 mb-2"><i class="fas fa-check-circle text-luxury-red/70"></i> ${f}</li>`;
             });
             updateImage();
             modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
+            modalContent.classList.add('modal-content-enter');
+            isCarDetailModalOpen = true;
+            updateBodyScroll();
         }
 
         function closeModal() {
+            modalContent.classList.remove('modal-content-enter');
             modal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
+            isCarDetailModalOpen = false;
+            updateBodyScroll();
         }
 
         function changeSlide(dir) {
@@ -434,20 +547,82 @@
             setTimeout(() => {
                 modalImg.src = cars[currentIndex].images[imgIndex];
                 modalImg.style.opacity = '1';
+                updateActiveThumbnail();
             }, 150);
+        }
+
+        function selectImage(index) {
+            imgIndex = index;
+            updateImage();
+        }
+
+        function updateActiveThumbnail() {
+            const thumbnails = document.querySelectorAll('#thumbnail-gallery .thumbnail-item');
+            thumbnails.forEach((thumb, index) => {
+                thumb.classList.toggle('active', index === imgIndex);
+                thumb.classList.toggle('border-luxury-red', index === imgIndex);
+                thumb.classList.toggle('opacity-100', index === imgIndex);
+                thumb.classList.toggle('opacity-50', index !== imgIndex);
+            });
+        }
+
+        // --- Filter Logic ---
+        function applyFilters() {
+            const searchTerm = carSearchInput.value.toLowerCase();
+            const selectedBrand = carBrandFilter.value;
+
+            let filteredCars = cars.filter(car => {
+                const matchesSearch = car.title.toLowerCase().includes(searchTerm) ||
+                                      car.make.toLowerCase().includes(searchTerm) ||
+                                      car.desc.toLowerCase().includes(searchTerm);
+                const matchesBrand = selectedBrand === "" || car.make === selectedBrand;
+                return matchesSearch && matchesBrand;
+            });
+
+            renderCarGrid(filteredCars);
+        }
+
+        function populateBrandFilter() {
+            const brands = [...new Set(cars.map(car => car.make))].sort(); // Sort alphabetically
+            brands.forEach(brand => {
+                const option = document.createElement('option');
+                option.value = brand;
+                option.textContent = brand;
+                carBrandFilter.appendChild(option);
+            });
+        }
+
+        function resetFilters() {
+            if (carSearchInput) carSearchInput.value = '';
+            if (carBrandFilter) carBrandFilter.value = '';
+            // Re-render the full list if the inventory modal is open
+            if (isInventoryModalOpen) {
+                renderCarGrid(cars);
+            }
+        }
+
+        // --- Event Listeners for Filters ---
+        if (carSearchInput) {
+            carSearchInput.addEventListener('keyup', applyFilters);
+        }
+        if (carBrandFilter) {
+            carBrandFilter.addEventListener('change', applyFilters);
+            populateBrandFilter(); // Populate on load
         }
 
         // Close modals with Escape key
         document.addEventListener('keydown', function (event) {
             if (event.key === 'Escape') {
-                if (contactOverlay && !contactOverlay.classList.contains('hidden')) {
+                if (isCarDetailModalOpen) {
+                    closeModal(); // Close car details first
+                } else if (isInventoryModalOpen) {
+                    closeInventoryModal(); // Then inventory
+                } else if (isContactModalOpen) {
                     closeContactModal();
-                }
-                if (modal && !modal.classList.contains('hidden')) {
-                    closeModal();
                 }
             }
         });
+
     </script>
 </body>
 </html>
