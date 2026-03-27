@@ -9,6 +9,7 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
     <script>
         tailwind.config = {
@@ -34,7 +35,7 @@
 
     <style>
         /* Base Styles */
-        body { background-color: #050505; }
+        body { background-color: #ffffff; }
         
         /* Fixed Video Background */
         #bg-video {
@@ -48,7 +49,7 @@
             transform: translate(-50%, -50%);
             object-fit: cover;
             z-index: -10;
-            opacity: 0.6;
+            opacity: 0.2;
         }
 
         /* Hide Scrollbar */
@@ -72,79 +73,129 @@
         }
     </style>
 </head>
-<body class="text-white antialiased selection:bg-luxury-red selection:text-white">
+<body class="text-black antialiased selection:bg-black selection:text-white">
+
+    <!-- GSAP Welcome Screen -->
+    <div id="welcome-screen" class="fixed inset-0 z-[999] bg-white flex flex-col items-center justify-center">
+        <div class="welcome-text font-sans text-4xl md:text-6xl tracking-[0.4em] font-bold text-black opacity-0 flex items-center justify-center uppercase">
+            Welcome
+        </div>
+    </div>
 
     <video autoplay muted loop playsinline id="bg-video">
-        <source src="images/carbackground.mp4" type="video/mp4">
+        <source src="images/homevideo.mp4" type="video/mp4">
     </video>
 
-    <nav class="fixed w-full z-50 top-0 transition-all duration-300 backdrop-blur-md bg-black/30 border-b border-white/10">
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300 backdrop-blur-xl bg-white/90 border-b border-black/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20 md:h-24">
                 <div class="flex-shrink-0">
-                    <span class="font-serif text-xl md:text-2xl tracking-[0.2em] font-bold">KEN<span class="text-luxury-red">JAP</span></span>
+                    <span class="font-sans text-xl md:text-2xl tracking-[0.2em] font-bold text-black uppercase">KENJAP</span>
                 </div>
                 
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-8">
-                        <button onclick="openInventoryModal()" class="hover:text-luxury-red transition-colors text-sm tracking-widest uppercase">Collection</button>
-                        <button onclick="openContactModal()" class="px-6 py-2 border border-white/30 hover:bg-white hover:text-black transition-all duration-300 text-sm tracking-widest uppercase">Contact</button>
+                        <button onclick="openInventoryModal()" class="text-black hover:text-gray-500 transition-colors text-[10px] font-bold tracking-widest uppercase">Collection</button>
+                        <button onclick="openContactModal()" class="px-6 py-3 border border-black hover:bg-black hover:text-white transition-all duration-500 text-[10px] font-bold tracking-widest uppercase">Contact</button>
                     </div>
                 </div>
 
                 <div class="-mr-2 flex md:hidden">
-                    <button onclick="toggleMobileMenu()" id="mobile-menu-button" class="text-white hover:text-luxury-red p-4 text-2xl focus:outline-none">
+                    <button onclick="toggleMobileMenu()" id="mobile-menu-button" class="text-black hover:text-gray-500 p-4 text-2xl focus:outline-none">
                         <i class="fas fa-bars"></i>
                     </button>
                 </div>
             </div >
         </div>
 
-        <div id="mobile-menu" class="hidden md:hidden bg-black/95 backdrop-blur-xl border border-white/10 absolute w-48 right-4 top-20 shadow-2xl rounded-lg">
-            <div class="px-4 py-4 space-y-4 flex flex-col text-center">
-                <button onclick="handleMobileInventoryClick()" class="block w-full text-white hover:text-luxury-red text-sm tracking-widest uppercase py-2 border-b border-white/10">Collection</button>
-                <button onclick="handleMobileContactClick()" class="block w-full text-white hover:text-luxury-red text-sm tracking-widest uppercase py-2">Contact</button>
-                <div class="pt-4 mt-auto border-t border-white/10 flex justify-center items-center space-x-6">
-                    <a href="https://www.instagram.com/kenjapmotors/" target="_blank" rel="noopener noreferrer" class="text-white/60 hover:text-white text-xl transition-colors"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.facebook.com/kenjapmotorslimited/" target="_blank" rel="noopener noreferrer" class="text-white/60 hover:text-white text-xl transition-colors"><i class="fab fa-facebook"></i></a>
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-xl border-b border-black/5 absolute w-full left-0 top-20 shadow-2xl">
+            <div class="px-6 py-8 space-y-6 flex flex-col text-center">
+                <button onclick="handleMobileInventoryClick()" class="block w-full text-black hover:text-gray-500 text-[10px] font-bold tracking-widest uppercase py-3 border-b border-black/5">Collection</button>
+                <button onclick="handleMobileContactClick()" class="block w-full text-black hover:text-gray-500 text-[10px] font-bold tracking-widest uppercase py-3">Contact</button>
+                <div class="pt-4 mt-auto flex justify-center items-center space-x-8">
+                    <a href="https://www.instagram.com/kenjapmotors/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-black text-xl transition-colors"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/kenjapmotorslimited/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-black text-xl transition-colors"><i class="fab fa-facebook"></i></a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <main class="relative z-10 pt-20">
+    <main class="relative z-10 pt-20 overflow-hidden">
+        
+        <!-- Wireframe Lines -->
+        <div class="absolute inset-0 pointer-events-none z-0 hidden lg:block">
+            <div class="absolute top-0 left-[15%] w-[1px] h-full bg-black/5"></div>
+            <div class="absolute top-[30%] left-0 w-full h-[1px] bg-black/5"></div>
+            <div class="absolute top-0 left-[85%] w-[1px] h-full bg-black/5"></div>
+        </div>
 
-        <section class="min-h-screen flex items-center justify-center text-center px-4">
-            <div class="max-w-4xl space-y-6 animate-fade-in-up">
-                <p class="text-luxury-red tracking-[0.3em] uppercase text-xs md:text-sm font-bold mb-4">Redefining Luxury Imports</p>
-                <h1 class="font-serif text-4xl md:text-7xl lg:text-8xl font-bold leading-tight text-shadow">
-                    Drive the <br> <span class="italic text-gray-300">Extraordinary</span>
-                </h1>
-                <p class="text-gray-300 text-base md:text-xl font-light tracking-wide max-w-2xl mx-auto pt-4">
-                    Premium vehicles sourced globally. Delivered to your doorstep in Kenya.
-                </p>
-                <div class="pt-10">
-                    <button onclick="openInventoryModal()" class="group relative px-8 py-4 overflow-hidden bg-transparent border border-white/40 text-white shadow-lg transition-all duration-300 hover:border-luxury-red rounded-sm active:scale-95">
-                        <span class="absolute inset-0 w-full h-full bg-luxury-red opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out"></span>
-                        <span class="relative flex items-center gap-3 tracking-widest uppercase text-sm font-semibold">
-                            Explore Fleet <i class="fas fa-arrow-down group-hover:translate-y-1 transition-transform"></i>
-                        </span>
-                    </button>
+        <section class="min-h-[90vh] relative flex items-center px-4 md:px-12 lg:px-24">
+            <div class="w-full relative z-10 flex flex-col lg:flex-row items-center">
+                <!-- Text Content -->
+                <div class="lg:w-7/12 relative z-20 mix-blend-multiply mt-10 lg:mt-0">
+                    <div class="hero-text-anim opacity-0 flex items-center gap-4 mb-8">
+                        <span class="text-[10px] tracking-[0.3em] font-mono text-gray-400">01</span>
+                        <div class="h-[1px] w-12 bg-black/20"></div>
+                        <span class="text-[10px] tracking-[0.2em] uppercase font-bold text-black">Editorial Archive</span>
+                    </div>
+                    
+                    <h1 class="font-sans text-6xl md:text-8xl lg:text-[10rem] font-bold leading-[0.85] tracking-tighter uppercase hero-text-anim opacity-0 text-black whitespace-nowrap">
+                        Art Of<br>
+                        <span class="text-transparent" style="-webkit-text-stroke: 2px black;">Motion</span>
+                    </h1>
+                    
+                    <p class="text-gray-500 text-xs md:text-sm font-light tracking-widest max-w-sm mt-10 hero-text-anim opacity-0 leading-relaxed uppercase">
+                        Curated high-end automotive imports. Engineered for performance, designed for absolute elegance.
+                    </p>
+                    
+                    <div class="pt-12 hero-text-anim opacity-0">
+                        <button onclick="openInventoryModal()" class="group relative px-8 py-5 overflow-hidden border border-black text-black transition-all duration-500 active:scale-95 flex items-center gap-4">
+                            <span class="absolute inset-0 w-full h-full bg-black translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></span>
+                            <span class="relative text-[10px] tracking-[0.2em] font-bold uppercase group-hover:text-white transition-colors duration-500 z-10">
+                                View Collection
+                            </span>
+                            <i class="fas fa-arrow-right relative z-10 group-hover:text-white transition-colors duration-500 text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Image & Tech Elements -->
+                <div class="lg:w-5/12 relative z-10 mt-20 lg:mt-0 hero-text-anim opacity-0 flex justify-center lg:justify-end w-full">
+                    <!-- Tech UI Details -->
+                    <div class="absolute -top-12 right-0 text-[10px] font-mono text-gray-400 tracking-widest text-right hidden lg:block">
+                        [FIG 1.0] G63 AMG<br>
+                        LAT. -1.2921 LON. 36.8219
+                    </div>
+                    <!-- Crosshair -->
+                    <div class="absolute top-1/2 -left-12 w-8 h-8 opacity-30 hidden lg:block">
+                        <div class="absolute top-1/2 left-0 w-full h-[1px] bg-black"></div>
+                        <div class="absolute top-0 left-1/2 w-[1px] h-full bg-black"></div>
+                    </div>
+                    
+                    <img src="images/gwagonhome (2).png" alt="Hero Vehicle" class="w-[120%] lg:w-[160%] max-w-none transform lg:-translate-x-32 scale-110 object-contain drop-shadow-2xl relative z-20">
+                </div>
+            </div>
+            
+            <!-- Bottom Bar -->
+            <div class="absolute bottom-0 left-0 w-full px-4 md:px-12 lg:px-24 pb-8 flex justify-between items-end border-t border-black/5 pt-8 hero-text-anim opacity-0 hidden md:flex">
+                <div class="text-[10px] font-mono tracking-widest text-gray-400">
+                    SYS.READY // 2024
+                </div>
+                <div class="text-[10px] font-mono tracking-widest text-black flex gap-8">
+                    <a href="https://www.instagram.com/kenjapmotors/" target="_blank" class="hover:text-gray-400 transition-colors">INSTAGRAM</a>
+                    <a href="https://wa.me/254701779941" target="_blank" class="hover:text-gray-400 transition-colors">WHATSAPP</a>
                 </div>
             </div>
         </section>
 
-        <!-- Gradient Transition -->
-        <div class="h-32 bg-gradient-to-b from-transparent to-luxury-black"></div>
-
         <!-- Footer -->
-        <footer class="bg-black py-16 border-t border-white/10">
-            <div class="max-w-7xl mx-auto px-6 text-center">
+        <footer class="bg-white py-16 border-t border-black/5 relative overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6 text-center relative z-10">
                 <div class="mb-6">
-                    <span class="font-serif text-2xl font-bold tracking-widest">KEN<span class="text-luxury-red">JAP</span></span>
-                    <p class="text-gray-500 text-xs mt-2 uppercase tracking-wide">Nairobi, Kenya</p>
+                    <span class="font-sans text-2xl font-bold tracking-widest text-black">KENJAP</span>
+                    <p class="text-gray-400 text-[10px] mt-2 uppercase tracking-widest font-mono">Nairobi, Kenya</p>
                 </div>
-                <div class="text-gray-600 text-[10px] uppercase tracking-widest">
+                <div class="text-gray-400 text-[9px] uppercase tracking-widest font-mono">
                     &copy; 2024 KENJAP. All rights reserved.
                 </div>
             </div>
@@ -154,28 +205,28 @@
 
     <!-- Inventory Overlay (Modal) -->
     <div id="inventory-overlay" class="fixed inset-0 z-[100] hidden" aria-labelledby="inventory-modal-title" role="dialog" aria-modal="true">
-        <div class="fixed inset-0 bg-black/90 backdrop-blur-sm transition-opacity" onclick="closeInventoryModal()"></div>
+        <div class="fixed inset-0 bg-white/95 backdrop-blur-md transition-opacity" onclick="closeInventoryModal()"></div>
         <div class="fixed inset-0 z-10 overflow-y-auto">
             <div class="flex min-h-full items-start justify-center p-4 text-center">
-                <div class="relative transform overflow-hidden bg-zinc-900 border border-white/10 text-left shadow-2xl transition-all w-full max-w-7xl rounded-lg p-6 md:p-8 mt-16 md:mt-20">
-                    <button onclick="closeInventoryModal()" class="absolute top-4 right-4 z-50 text-white hover:text-luxury-red transition-colors bg-black/50 rounded-full p-3 w-12 h-12 flex items-center justify-center active:scale-95">
+                <div class="relative transform overflow-hidden bg-white border border-black/5 text-left shadow-2xl transition-all w-full max-w-7xl p-6 md:p-12 mt-16 md:mt-20">
+                    <button onclick="closeInventoryModal()" class="absolute top-6 right-6 z-50 text-black hover:text-white hover:bg-black transition-colors bg-gray-50 border border-black/10 rounded-none p-3 w-12 h-12 flex items-center justify-center active:scale-95">
                         <i class="fas fa-times text-xl"></i>
                     </button>
 
-                    <h2 id="inventory-modal-title" class="font-serif text-3xl md:text-5xl text-white mb-4 text-center">Curated Inventory</h2>
-                    <div class="h-1 w-24 bg-luxury-red mx-auto mb-10"></div>
-                    <p class="text-gray-400 mt-4 font-light text-sm md:text-base text-center mb-10">Select vehicles available for immediate viewing.</p>
-
-                    <div class="flex flex-col md:flex-row justify-center items-center gap-4 mb-12">
-                        <input type="text" id="car-search" placeholder="Search by model..." class="w-full md:w-1/3 p-3 bg-zinc-800 border border-white/10 rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-luxury-red transition-colors text-sm">
-                        <select id="car-brand-filter" class="w-full md:w-1/6 p-3 bg-zinc-800 border border-white/10 rounded-md text-white focus:outline-none focus:border-luxury-red transition-colors text-sm">
-                            <option value="">All Brands</option>
-                            <!-- Brands will be populated by JS -->
-                        </select>
-                        <!-- Add more filters here if needed (e.g., transmission) -->
+                    <div class="text-center mb-16">
+                        <p class="text-[10px] font-mono tracking-[0.3em] uppercase text-gray-400 mb-4">Inventory Data</p>
+                        <h2 id="inventory-modal-title" class="font-sans text-4xl md:text-6xl text-black font-bold uppercase tracking-tighter">Curated Fleet</h2>
+                        <div class="h-[1px] w-24 bg-black mx-auto mt-8 mb-6"></div>
                     </div>
 
-                    <div id="car-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-24 md:gap-y-32 pt-10">
+                    <div class="flex flex-col md:flex-row justify-center items-center gap-6 mb-16 max-w-2xl mx-auto">
+                        <input type="text" id="car-search" placeholder="SEARCH MODEL..." class="w-full md:w-1/2 px-4 py-3 bg-transparent border-b border-black/20 text-black placeholder-gray-400 focus:outline-none focus:border-black transition-colors text-[10px] font-mono tracking-widest uppercase rounded-none">
+                        <select id="car-brand-filter" class="w-full md:w-1/2 px-4 py-3 bg-transparent border-b border-black/20 text-black focus:outline-none focus:border-black transition-colors text-[10px] font-mono tracking-widest uppercase rounded-none appearance-none" style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.4-5.4-13z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 0.7rem center; background-size: 0.65em auto; padding-right: 2.5rem;">
+                            <option value="">All Brands</option>
+                        </select>
+                    </div>
+
+                    <div id="car-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-t border-l border-black/5 relative">
                         <!-- Car cards will be injected here by JavaScript -->
                     </div>
                 </div>
@@ -185,29 +236,45 @@
 
     <!-- Contact Overlay (Modal) -->
     <div id="contact-overlay" class="fixed inset-0 z-[100] hidden" aria-labelledby="contact-modal-title" role="dialog" aria-modal="true">
-        <div class="fixed inset-0 bg-black/90 backdrop-blur-sm transition-opacity" onclick="closeContactModal()"></div>
+        <div class="fixed inset-0 bg-white/95 backdrop-blur-md transition-opacity" onclick="closeContactModal()"></div>
         <div class="fixed inset-0 z-10 overflow-y-auto">
             <div class="flex min-h-full items-center justify-center p-4 text-center">
-                <div class="relative transform overflow-hidden bg-zinc-900 border border-white/10 text-left shadow-2xl transition-all w-full max-w-md rounded-lg p-5 md:p-6">
-                    <button onclick="closeContactModal()" class="absolute top-3 right-3 z-50 text-white hover:text-luxury-red transition-colors bg-black/50 rounded-full p-2 w-8 h-8 flex items-center justify-center active:scale-95">
-                        <i class="fas fa-times text-sm"></i>
+                <div class="relative transform overflow-hidden bg-white border border-black/10 text-left shadow-2xl transition-all w-full max-w-lg p-10 md:p-14">
+                    <button onclick="closeContactModal()" class="absolute top-4 right-4 z-50 text-black hover:text-white hover:bg-black transition-colors bg-transparent border border-black/10 p-2 w-10 h-10 flex items-center justify-center active:scale-95">
+                        <i class="fas fa-times text-lg"></i>
                     </button>
                     
-                    <h2 id="contact-modal-title" class="font-serif text-xl md:text-2xl text-white mb-4">Our Locations</h2>
+                    <div class="text-center mb-12">
+                        <p class="text-[10px] font-mono tracking-[0.3em] uppercase text-gray-400 mb-4">Comms Link</p>
+                        <h2 id="contact-modal-title" class="font-sans text-4xl text-black font-bold uppercase tracking-tight">Get In Touch</h2>
+                        <div class="h-[1px] w-16 bg-black mx-auto mt-6"></div>
+                    </div>
                     
-                    <div class="space-y-6 text-sm">
-                        <div class="location space-y-2">
-                            <h3 class="font-serif text-lg text-luxury-red mb-2">Nairobi</h3>
-                            <p class="text-gray-300 flex items-start text-xs"><i class="fas fa-map-marker-alt w-4 mt-0.5 mr-2 text-white/50"></i><span>Muthithi Rd, Nairobi<br>Junction of Muthithi Road & Chiromo Lane</span></p>
-                            <p class="pt-1"><a href="tel:+254701779941" class="text-gray-300 hover:text-white transition inline-flex items-center text-xs"><i class="fas fa-phone w-4 mr-2 text-white/50"></i>+254 701 779 941</a></p>
-                            <p><a href="mailto:info@kenjap.co.ke" class="text-gray-300 hover:text-white transition inline-flex items-center text-xs"><i class="fas fa-envelope w-4 mr-2 text-white/50"></i>info@kenjap.co.ke</a></p>
+                    <div class="space-y-8">
+                        <div class="location">
+                            <h3 class="font-sans text-[10px] tracking-widest text-black font-bold uppercase mb-4 border-b border-black/10 pb-2">Nairobi HQ</h3>
+                            <div class="space-y-4 text-gray-500 text-xs font-mono uppercase tracking-widest">
+                                <p class="flex items-start leading-relaxed"><span>Muthithi Rd, Westlands<br>Junction of Muthithi Rd & Chiromo Lane</span></p>
+                                <p><a href="tel:+254701779941" class="hover:text-black transition inline-flex items-center">+254 701 779 941</a></p>
+                                <p><a href="mailto:info@kenjap.co.ke" class="hover:text-black transition inline-flex items-center">info@kenjap.co.ke</a></p>
+                            </div>
                         </div>
-                        <div class="h-px w-full bg-white/10"></div>
-                        <div class="location space-y-2">
-                            <h3 class="font-serif text-lg text-luxury-red mb-2">Nakuru</h3>
-                            <p class="text-gray-300 flex items-start text-xs"><i class="fas fa-map-marker-alt w-4 mt-0.5 mr-2 text-white/50"></i><span>West Road, Adjacent to The Ole-Ken Hotel<br>Next to Mt. Kenya Uni. Nakuru Campus</span></p>
-                            <p class="pt-1"><a href="tel:+254701779941" class="text-gray-300 hover:text-white transition inline-flex items-center text-xs"><i class="fas fa-phone w-4 mr-2 text-white/50"></i>+254 701 779 941</a></p>
+                        
+                        <div class="h-[1px] w-full bg-black/10"></div>
+
+                        <div class="location">
+                            <h3 class="font-sans text-[10px] tracking-widest text-black font-bold uppercase mb-4 border-b border-black/10 pb-2">Nakuru Branch</h3>
+                            <div class="space-y-4 text-gray-500 text-xs font-mono uppercase tracking-widest">
+                                <p class="flex items-start leading-relaxed"><span>West Road, Adj. The Ole-Ken Hotel<br>Next to Mt. Kenya Uni. Campus</span></p>
+                                <p><a href="tel:+254701779941" class="hover:text-black transition inline-flex items-center">+254 701 779 941</a></p>
+                            </div>
                         </div>
+                    </div>
+
+                    <div class="mt-12 pt-8 border-t border-black/10 flex justify-center items-center space-x-10">
+                        <a href="https://www.instagram.com/kenjapmotors/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-black text-2xl transition-colors"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/kenjapmotorslimited/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-black text-2xl transition-colors"><i class="fab fa-facebook"></i></a>
+                        <a href="https://wa.me/254701779941" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-black text-2xl transition-colors"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
             </div>
@@ -215,65 +282,67 @@
     </div>
 
     <div id="carModal" class="fixed inset-0 z-[100] hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-        <div class="fixed inset-0 bg-black/90 backdrop-blur-sm transition-opacity" onclick="closeModal()"></div>
+        <div class="fixed inset-0 bg-white/95 backdrop-blur-md transition-opacity" onclick="closeModal()"></div>
         <div class="fixed inset-0 z-10 overflow-y-auto">
             <div class="flex min-h-full items-center justify-center p-4 text-center">
-                <div id="car-modal-content" class="relative transform overflow-hidden bg-zinc-900 border border-white/10 text-left shadow-2xl transition-all w-full max-w-4xl rounded-lg flex flex-col">
-                    <button onclick="closeModal()" class="absolute top-4 right-4 z-50 text-white hover:text-luxury-red transition-colors bg-black/50 rounded-full p-3 w-12 h-12 flex items-center justify-center active:scale-95">
-                        <i class="fas fa-times text-xl"></i>
+                <div id="car-modal-content" class="relative transform overflow-hidden bg-white border border-black/10 text-left shadow-2xl transition-all w-full max-w-4xl flex flex-col">
+                    <button onclick="closeModal()" class="absolute top-6 left-6 z-50 text-black hover:text-white hover:bg-black transition-colors bg-white border border-black/10 p-3 w-12 h-12 flex items-center justify-center active:scale-95">
+                        <i class="fas fa-arrow-left text-xl"></i>
                     </button>
                     
-                    <div class="p-8 md:p-10 text-center border-b border-white/10">
-                        <p class="text-luxury-red text-xs uppercase tracking-widest font-bold mb-2">Available Now</p>
-                        <h2 id="modal-title" class="font-serif text-3xl md:text-5xl text-white mb-2 leading-tight"></h2>
-                        <div class="my-4">
-                            <p id="modal-price-ksh" class="text-xl md:text-2xl font-bold text-white"></p>
-                            <p id="modal-price-usd" class="text-xs text-gray-400"></p>
+                    <div class="p-8 md:p-14 text-center border-b border-black/5 relative">
+                        <!-- Tech corner marker -->
+                        <div class="absolute top-6 right-6 w-4 h-4 border-t border-r border-black/20"></div>
+                        <p class="text-black text-[10px] font-mono uppercase tracking-[0.3em] mb-4">Available Fleet</p>
+                        <h2 id="modal-title" class="font-sans text-4xl md:text-6xl text-black font-bold uppercase tracking-tighter mb-4 leading-none"></h2>
+                        <div class="flex flex-col items-center gap-1">
+                            <p id="modal-price-ksh" class="text-xl md:text-2xl font-bold text-black"></p>
+                            <p id="modal-price-usd" class="text-[10px] font-mono tracking-widest text-gray-400"></p>
                         </div>
                     </div>
 
-                    <div class="w-full bg-black relative flex items-center justify-center group h-[40vh] md:h-[500px]">
+                    <div class="w-full bg-gray-50 border-b border-black/5 relative flex items-center justify-center group h-[40vh] md:h-[500px]">
                         <img id="modal-img" src="" alt="Car Detail" class="max-h-full max-w-full object-contain transition-opacity duration-300">
-                        <button onclick="changeSlide(-1)" class="absolute left-2 md:left-4 bg-white/10 hover:bg-white/30 text-white p-4 rounded-full backdrop-blur-md transition-all active:scale-90"><i class="fas fa-chevron-left text-lg"></i></button>
-                        <button onclick="changeSlide(1)" class="absolute right-2 md:right-4 bg-white/10 hover:bg-white/30 text-white p-4 rounded-full backdrop-blur-md transition-all active:scale-90"><i class="fas fa-chevron-right text-lg"></i></button>
+                        <button onclick="changeSlide(-1)" class="absolute left-4 md:left-8 bg-white border border-black/10 hover:bg-black hover:text-white text-black p-4 transition-all active:scale-90"><i class="fas fa-chevron-left text-lg"></i></button>
+                        <button onclick="changeSlide(1)" class="absolute right-4 md:right-8 bg-white border border-black/10 hover:bg-black hover:text-white text-black p-4 transition-all active:scale-90"><i class="fas fa-chevron-right text-lg"></i></button>
                     </div>
 
-                    <div id="thumbnail-gallery" class="flex justify-center gap-2 p-4 bg-black/50 border-y border-white/5">
+                    <div id="thumbnail-gallery" class="flex justify-center gap-3 p-6 bg-white border-b border-black/5">
                         <!-- Thumbnails will be injected here -->
                     </div>
 
-                    <div class="p-8 md:p-10 flex flex-col justify-between bg-zinc-900">
+                    <div class="p-8 md:p-12 flex flex-col justify-between bg-white">
                         <div>
-                            <p id="modal-desc" class="text-gray-300 text-sm md:text-base leading-relaxed mb-8 max-w-3xl mx-auto text-center"></p>
+                            <p id="modal-desc" class="text-gray-600 text-xs md:text-sm font-light uppercase tracking-widest leading-relaxed mb-12 max-w-2xl mx-auto text-center"></p>
 
-                            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8 text-center max-w-2xl mx-auto">
-                                <div class="bg-black/40 p-3 rounded-lg border border-white/5">
-                                    <p class="text-xs text-gray-500 uppercase">Year</p>
-                                    <p id="spec-year" class="text-base font-bold text-white mt-1"></p>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 text-center max-w-3xl mx-auto">
+                                <div class="bg-gray-50 p-4 border border-black/5">
+                                    <p class="text-[9px] font-mono tracking-widest text-gray-400 uppercase">Year</p>
+                                    <p id="spec-year" class="text-sm font-bold text-black mt-2"></p>
                                 </div>
-                                <div class="bg-black/40 p-3 rounded-lg border border-white/5">
-                                    <p class="text-xs text-gray-500 uppercase">Mileage</p>
-                                    <p id="spec-mileage" class="text-base font-bold text-white mt-1"></p>
+                                <div class="bg-gray-50 p-4 border border-black/5">
+                                    <p class="text-[9px] font-mono tracking-widest text-gray-400 uppercase">Mileage</p>
+                                    <p id="spec-mileage" class="text-sm font-bold text-black mt-2"></p>
                                 </div>
-                                <div class="bg-black/40 p-3 rounded-lg border border-white/5">
-                                    <p class="text-xs text-gray-500 uppercase">Trans</p>
-                                    <p id="spec-trans" class="text-base font-bold text-white mt-1"></p>
+                                <div class="bg-gray-50 p-4 border border-black/5">
+                                    <p class="text-[9px] font-mono tracking-widest text-gray-400 uppercase">Trans</p>
+                                    <p id="spec-trans" class="text-sm font-bold text-black mt-2"></p>
                                 </div>
-                                <div class="bg-black/40 p-3 rounded-lg border border-white/5">
-                                    <p class="text-xs text-gray-500 uppercase">Engine</p>
-                                    <p id="spec-engine" class="text-base font-bold text-white mt-1"></p>
+                                <div class="bg-gray-50 p-4 border border-black/5">
+                                    <p class="text-[9px] font-mono tracking-widest text-gray-400 uppercase">Engine</p>
+                                    <p id="spec-engine" class="text-sm font-bold text-black mt-2"></p>
                                 </div>
                             </div>
 
-                            <h4 class="text-white text-sm uppercase tracking-widest mb-4 font-semibold text-center">Key Features</h4>
-                            <ul id="modal-features" class="columns-2 md:columns-3 gap-x-8 text-sm text-gray-300 mb-8 max-w-3xl mx-auto"></ul>
+                            <h4 class="text-black text-[10px] uppercase font-mono tracking-[0.2em] mb-6 font-bold text-center border-b border-black/10 pb-4 max-w-3xl mx-auto">Key Features</h4>
+                            <ul id="modal-features" class="columns-2 md:columns-3 gap-x-8 text-[11px] font-mono tracking-widest text-gray-500 mb-12 max-w-3xl mx-auto uppercase"></ul>
                         </div>
 
                         <div class="flex flex-col md:flex-row gap-3 mt-auto max-w-lg mx-auto w-full">
-                            <a id="whatsapp-btn" href="#" target="_blank" class="w-full bg-whatsapp-green text-white py-4 rounded-sm uppercase tracking-widest text-xs font-bold hover:brightness-110 transition-all duration-300 text-center flex items-center justify-center gap-2 active:scale-95 shadow-lg">
+                            <a id="whatsapp-btn" href="#" target="_blank" class="w-full bg-whatsapp-green text-white py-4 uppercase tracking-[0.2em] text-[10px] font-bold hover:brightness-110 transition-all duration-300 text-center flex items-center justify-center gap-3 active:scale-95">
                                 <i class="fab fa-whatsapp text-lg"></i> Chat on WhatsApp
                             </a>
-                            <button class="w-full bg-white text-black py-4 rounded-sm uppercase tracking-widest text-xs font-bold hover:bg-luxury-red hover:text-white transition-colors duration-300 active:scale-95">
+                            <button class="w-full bg-black text-white border border-black py-4 uppercase tracking-[0.2em] text-[10px] font-bold hover:bg-transparent hover:text-black transition-colors duration-300 active:scale-95">
                                 Request Call Back
                             </button>
                         </div>
@@ -337,9 +406,9 @@
         const inventoryOverlay = document.getElementById('inventory-overlay');
 
         function openInventoryModal() {
-            renderCarGrid(cars); // Render all cars when modal opens
             if (inventoryOverlay) {
                 inventoryOverlay.classList.remove('hidden');
+                renderCarGrid(cars); // Render all cars after the modal is visible for GSAP
                 isInventoryModalOpen = true;
                 updateBodyScroll();
             }
@@ -426,59 +495,55 @@
         function renderCarGrid(carsToRender) {
             grid.innerHTML = ''; // Clear existing cars
             if (carsToRender.length === 0) {
-                grid.innerHTML = '<p class="col-span-full text-center text-gray-400 text-lg py-10">No vehicles found matching your criteria.</p>';
+                grid.innerHTML = '<p class="col-span-full text-center text-gray-400 text-xs font-mono tracking-widest py-20 uppercase">No vehicles found matching your criteria.</p>';
                 return;
             }
 
             carsToRender.forEach((car, index) => {
             const div = document.createElement('div');
-            div.className = "group relative mt-16 md:mt-16"; 
+            const colSpan = index === 0 ? "md:col-span-2 lg:col-span-2" : "";
+            div.className = `group relative border-r border-b border-black/5 p-8 md:p-12 hover:bg-gray-50 transition-colors duration-500 cursor-pointer flex flex-col justify-between min-h-[450px] ${colSpan}`;
             
-            let imgStyle = "";
-            let containerPadding = "";
-            let imgPosition = "";
-            // Use the original index from the 'cars' array for openModal
             const originalIndex = cars.findIndex(c => c.id === car.id);
-
-            if(car.isTransparent) {
-                imgStyle = "w-full h-44 md:h-48 object-contain drop-shadow-2xl transform scale-100 group-hover:scale-110 transition-transform duration-500";
-                imgPosition = "-top-16 md:-top-20"; 
-                containerPadding = "pt-28 md:pt-32";
-            } else {
-                // This else block seems to be for non-transparent images, but all current cars are transparent.
-                // If you add non-transparent images, ensure they are styled appropriately.
-                imgStyle = "w-full h-44 md:h-48 object-cover rounded-xl shadow-2xl shadow-black/50 group-hover:scale-105 transition-transform duration-500";
-                imgPosition = "-top-14 md:-top-18";
-                containerPadding = "pt-28 md:pt-32";
-            }
+            const imgMaxHeight = index === 0 ? "max-h-64 md:max-h-80" : "max-h-48";
 
             div.innerHTML = `
-                <div class="h-full bg-zinc-900/40 backdrop-blur-md border border-white/10 rounded-2xl p-6 ${containerPadding} relative hover:bg-zinc-900/60 hover:border-luxury-red/50 transition-all duration-300 cursor-pointer" onclick="openModal(${originalIndex})">
-                    
-                    <div class="absolute ${imgPosition} left-1/2 transform -translate-x-1/2 w-[90%] z-20 transition-transform duration-500 group-hover:-translate-y-4">
-                        <img src="${car.cardImage}" alt="${car.title}" class="${imgStyle}">
-                    </div>
+                <!-- Tech Corners -->
+                <div class="absolute top-0 left-0 w-3 h-3 border-t border-l border-black opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div class="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-black opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-                    <div class="relative z-10 text-center mt-2">
-                        <p class="text-luxury-red text-[10px] font-bold tracking-[0.2em] uppercase mb-2 md:mb-3">Premium Select</p>
-                        <h3 class="font-serif text-xl md:text-2xl text-white mb-2 leading-none">${car.title}</h3>
-                        
-                        <div class="h-0.5 w-12 bg-white/10 mx-auto my-4 md:my-6 group-hover:bg-luxury-red transition-colors"></div>
-                        
-                        <div class="flex justify-between items-end border-t border-white/5 pt-4">
-                             <div class="text-left">
-                                <p class="text-gray-500 text-[10px] uppercase tracking-wider">Price</p>
-                                <p class="text-white font-bold text-xs md:text-sm">${car.priceKsh}</p>
-                             </div>
-                             <button class="text-[10px] uppercase font-bold tracking-widest text-white border-b border-white/30 pb-1 hover:text-luxury-red hover:border-luxury-red transition-all">
-                                View Specs
-                             </button>
-                        </div>
+                <div class="relative z-10 flex justify-between items-start mb-8" onclick="openModal(${originalIndex})">
+                    <div>
+                        <p class="text-[9px] font-mono tracking-[0.2em] text-gray-400 uppercase mb-3">ID // ${car.id.toString().padStart(3, '0')}</p>
+                        <h3 class="font-sans text-2xl md:text-3xl font-bold uppercase tracking-tighter text-black">${car.title}</h3>
+                    </div>
+                    <div class="w-10 h-10 flex items-center justify-center border border-black/10 rounded-none group-hover:bg-black group-hover:text-white transition-all hidden md:flex">
+                        <i class="fas fa-plus text-xs"></i>
+                    </div>
+                </div>
+                
+                <div class="relative z-20 w-full flex-grow flex items-center justify-center -mx-4 group-hover:scale-110 transition-transform duration-700 ease-out py-8" onclick="openModal(${originalIndex})">
+                    <img src="${car.cardImage}" alt="${car.title}" class="w-full h-full ${imgMaxHeight} object-contain drop-shadow-xl">
+                </div>
+
+                <div class="relative z-10 flex justify-between items-end border-t border-black/10 pt-6 mt-4 pointer-events-none">
+                    <div>
+                        <p class="text-[9px] uppercase font-mono tracking-widest text-gray-400 mb-2">Estimated Value</p>
+                        <p class="text-black font-semibold text-sm">${car.priceKsh}</p>
+                    </div>
+                    <div class="text-[9px] font-mono tracking-widest text-gray-400 text-right uppercase">
+                        ${car.specs.year} <br> ${car.specs.trans}
                     </div>
                 </div>
             `;
             grid.appendChild(div);
             });
+
+            // Animate the newly added car cards using GSAP
+            gsap.fromTo(grid.children, 
+                { opacity: 0, y: 50 }, 
+                { opacity: 1, y: 0, duration: 0.6, stagger: 0.15, ease: "power3.out", clearProps: "all" }
+            );
         }
 
         let currentIndex = 0;
@@ -510,7 +575,7 @@
             car.images.forEach((imgSrc, i) => {
                 const thumb = document.createElement('img');
                 thumb.src = imgSrc;
-                thumb.className = 'thumbnail-item w-20 h-12 object-cover rounded cursor-pointer border-2';
+                thumb.className = 'thumbnail-item w-24 h-16 object-cover cursor-pointer border border-transparent transition-all duration-300';
                 thumb.onclick = () => selectImage(i);
                 thumbnailGallery.appendChild(thumb);
             });
@@ -518,13 +583,14 @@
             const feats = document.getElementById('modal-features');
             feats.innerHTML = '';
             car.features.forEach(f => {
-                feats.innerHTML += `<li class="flex items-center gap-3 mb-2"><i class="fas fa-check-circle text-luxury-red/70"></i> ${f}</li>`;
+                feats.innerHTML += `<li class="flex items-center gap-3 mb-3"><div class="w-1 h-1 bg-black rounded-full"></div> ${f}</li>`;
             });
             updateImage();
             modal.classList.remove('hidden');
             modalContent.classList.add('modal-content-enter');
             isCarDetailModalOpen = true;
             updateBodyScroll();
+            animateModalContent();
         }
 
         function closeModal() {
@@ -559,10 +625,10 @@
         function updateActiveThumbnail() {
             const thumbnails = document.querySelectorAll('#thumbnail-gallery .thumbnail-item');
             thumbnails.forEach((thumb, index) => {
-                thumb.classList.toggle('active', index === imgIndex);
-                thumb.classList.toggle('border-luxury-red', index === imgIndex);
+                thumb.classList.toggle('border-black', index === imgIndex);
+                thumb.classList.toggle('border-transparent', index !== imgIndex);
                 thumb.classList.toggle('opacity-100', index === imgIndex);
-                thumb.classList.toggle('opacity-50', index !== imgIndex);
+                thumb.classList.toggle('opacity-40', index !== imgIndex);
             });
         }
 
@@ -623,6 +689,54 @@
             }
         });
 
+         function animateModalContent() {
+            const tl = gsap.timeline();
+
+            tl.fromTo("#modal-title", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" })
+              .fromTo("#modal-price-ksh", { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, "-=0.2")
+              .fromTo("#modal-price-usd", { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, "-=0.2")
+              .fromTo("#modal-desc", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, "-=0.1")
+              .fromTo([
+                "#spec-year",
+                "#spec-mileage",
+                "#spec-trans",
+                "#spec-engine"
+              ], { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.3, stagger: 0.1, ease: "power2.out" }, "-=0.1")
+              .fromTo("#modal-features li", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.3, stagger: 0.05, ease: "power2.out" }, "-=0.1");
+        }
+
+
+
+
+        // --- GSAP Welcome Screen Animation ---
+        document.addEventListener("DOMContentLoaded", () => {
+            document.body.style.overflow = "hidden"; // Prevent scrolling during animation
+            
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    document.body.style.overflow = "auto";
+                    const welcomeScreen = document.getElementById("welcome-screen");
+                    if(welcomeScreen) welcomeScreen.remove(); // Remove element so it doesn't block clicks later
+                }
+            });
+
+            tl.fromTo(".welcome-text", 
+                { opacity: 0, scale: 0.9, y: 20 },
+                { opacity: 1, scale: 1, y: 0, duration: 1.2, ease: "power3.out" }
+            )
+            .to(".welcome-text", { opacity: 0, scale: 1.05, duration: 0.6, delay: 0.8, ease: "power3.in" })
+            .to("#welcome-screen", { y: "-100%", duration: 1, ease: "power4.inOut" })
+            .fromTo("nav", 
+                { y: -100, opacity: 0 }, 
+                { y: 0, opacity: 1, duration: 1, ease: "power3.out", clearProps: "all" }, 
+                "-=0.5"
+            )
+            .fromTo(".hero-text-anim",
+                { opacity: 0, y: 30 },
+                { opacity: 1, y: 0, duration: 1, stagger: 0.2, ease: "power3.out", clearProps: "all" },
+                "-=0.7"
+            );
+        });
     </script>
 </body>
 </html>
