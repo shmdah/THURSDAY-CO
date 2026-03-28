@@ -105,17 +105,17 @@
 
     <main class="relative z-10 pt-16 md:pt-20">
         
-        <section class="relative bg-dark-bg w-full min-h-[60vh] md:min-h-[75vh] flex flex-col items-center justify-center pt-8 pb-28 md:pb-32 px-4">
+        <section class="relative bg-dark-bg w-full min-h-[60vh] md:min-h-[75vh] flex flex-col items-center justify-center pt-2 md:pt-0 pb-28 md:pb-32 px-4">
             <div class="absolute inset-0 overflow-hidden pointer-events-none">
                 <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 bg-white/5 blur-[120px] rounded-full"></div>
             </div>
 
             <div class="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center">
-                <img src="images/gwagonhome (2).png" alt="Hero Car" class="w-full max-w-4xl object-contain drop-shadow-2xl hero-anim opacity-0 transform translate-y-10">
+                <img src="images/gwagonhome (2).png" alt="Hero Car" class="w-full max-w-4xl object-contain drop-shadow-2xl hero-anim opacity-0 -mt-10 md:-mt-16">
                 
                 <div class="w-full flex flex-col md:flex-row justify-between items-end mt-4 md:mt-8 hero-anim opacity-0">
                     <h1 class="font-heading text-4xl md:text-7xl font-bold text-white leading-tight text-center md:text-left w-full md:w-auto">
-                        Premium car<br>rental & sales
+                        FIND YOUR<br>DREAM CAR
                     </h1>
                     <p class="text-gray-400 text-xs md:text-sm max-w-xs mt-4 md:mt-0 leading-relaxed font-medium text-center md:text-left mx-auto md:mx-0">
                         We don't just sell cars. We provide premium experiences with no hassle. Simple processes, exclusive inventory.
@@ -380,17 +380,17 @@
     <div id="carModal" class="fixed inset-0 z-[100] hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
         <div class="fixed inset-0 bg-dark-bg/60 backdrop-blur-md transition-opacity" onclick="closeModal()"></div>
         <div class="fixed inset-0 z-10 overflow-y-auto flex min-h-full items-center justify-center p-2 md:p-8">
-            <div id="car-modal-content" class="relative bg-white rounded-2xl md:rounded-[2rem] shadow-2xl w-full max-w-5xl flex flex-col overflow-hidden">
+            <div id="car-modal-content" class="relative bg-white rounded-2xl md:rounded-[2rem] shadow-2xl w-full max-w-5xl flex flex-col overflow-hidden max-h-[85vh] md:max-h-[65vh]">
                 
-                <div class="flex flex-col-reverse sm:flex-row sm:justify-between items-start sm:items-center p-4 md:p-6 border-b border-gray-100 gap-2 sm:gap-0">
+                <div class="flex flex-col-reverse sm:flex-row sm:justify-between items-start sm:items-center p-4 md:p-6 border-b border-gray-100 gap-2 sm:gap-0 flex-shrink-0">
                     <button onclick="closeModal()" class="flex items-center gap-2 text-xs md:text-sm font-bold text-gray-600 hover:text-brand-blue transition-colors px-2 py-1 -ml-2 rounded-lg hover:bg-gray-50">
                         <i class="fas fa-arrow-left"></i> Go Back
                     </button>
                     <h2 id="modal-title" class="font-heading text-lg md:text-2xl font-bold text-gray-900 truncate w-full sm:w-auto text-left sm:text-right"></h2>
                 </div>
 
-                <div class="flex flex-col md:flex-row h-full">
-                    <div class="w-full md:w-3/5 bg-card-gray relative flex items-center justify-center min-h-[250px] sm:min-h-[350px] md:min-h-[500px]">
+                <div class="flex flex-col md:flex-row flex-1 overflow-y-auto no-scrollbar">
+                    <div class="w-full md:w-3/5 bg-card-gray relative flex items-center justify-center min-h-[200px] sm:min-h-[250px] md:min-h-[350px] flex-shrink-0 md:flex-shrink">
                         <img id="modal-img" src="" alt="Car Detail" class="max-h-[85%] max-w-[90%] object-contain transition-opacity duration-300 drop-shadow-xl p-4">
                         <button onclick="changeSlide(-1)" class="absolute left-2 md:left-4 w-8 h-8 md:w-10 md:h-10 bg-white rounded-full shadow-md hover:bg-gray-50 flex items-center justify-center text-gray-600"><i class="fas fa-chevron-left text-xs md:text-sm"></i></button>
                         <button onclick="changeSlide(1)" class="absolute right-2 md:right-4 w-8 h-8 md:w-10 md:h-10 bg-white rounded-full shadow-md hover:bg-gray-50 flex items-center justify-center text-gray-600"><i class="fas fa-chevron-right text-xs md:text-sm"></i></button>
@@ -399,7 +399,7 @@
                             </div>
                     </div>
 
-                    <div class="w-full md:w-2/5 p-5 md:p-8 flex flex-col bg-white">
+                    <div class="w-full md:w-2/5 p-4 md:p-6 flex flex-col bg-white">
                         <div class="mb-4 md:mb-6">
                             <p class="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-widest mb-0.5 md:mb-1">Price</p>
                             <div class="flex items-baseline flex-wrap gap-x-3 gap-y-1">
