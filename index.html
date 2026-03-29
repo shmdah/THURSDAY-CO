@@ -87,9 +87,6 @@
                     <button onclick="openInventoryModal()" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center hover:bg-gray-100 transition-colors">
                         <i class="fas fa-search text-gray-600 text-sm"></i>
                     </button>
-                    <button onclick="openContactModal()" class="w-10 h-10 rounded-full bg-dark-bg flex items-center justify-center hover:bg-black transition-colors shadow-lg">
-                        <i class="fas fa-user text-white text-sm"></i>
-                    </button>
                 </div>
 
                 <div class="-mr-2 flex md:hidden">
@@ -163,49 +160,52 @@
                 </button>
             </div>
         </div>
+        </div>
+
+        <div class="app-page page-category hidden min-h-[60vh]">
 
         <section id="category" class="pt-16 md:pt-24 pb-12 md:pb-16 px-4 md:px-8 max-w-7xl mx-auto">
             <h2 class="font-heading text-2xl md:text-4xl font-extrabold text-gray-900 mb-6 md:mb-10 text-center md:text-left">Car Category</h2>
             
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
-                <div class="relative rounded-2xl md:rounded-3xl overflow-hidden aspect-[3/4] group cursor-pointer bg-gray-100" onclick="document.getElementById('hero-brand').value='Mercedes-Benz'; triggerHeroSearch();">
-                    <img src="images/GWAGON 1 (1).jpeg" alt="Mercedes" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90">
+                <div class="relative rounded-2xl md:rounded-3xl overflow-hidden aspect-[3/4] group cursor-pointer bg-gray-100" onclick="searchByCategory('SUV')">
+                    <img src="images/GWAGON 1 (1).jpeg" alt="SUV" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90">
                     <div class="absolute inset-0 bg-gradient-to-b from-black/40 to-transparent"></div>
                     <div class="absolute top-4 left-4 md:top-6 md:left-6">
-                        <h3 class="text-white font-heading font-bold text-base md:text-2xl leading-tight">Mercedes<br>-Benz</h3>
+                        <h3 class="text-white font-heading font-bold text-base md:text-2xl leading-tight">SUV</h3>
                     </div>
                     <div class="absolute bottom-4 right-4 md:bottom-6 md:right-6 w-6 h-6 md:w-8 md:h-8 rounded-full bg-brand-blue text-white flex items-center justify-center shadow-lg">
                         <i class="fas fa-arrow-right text-[10px] md:text-xs transform -rotate-45"></i>
                     </div>
                 </div>
                 
-                <div class="relative rounded-2xl md:rounded-3xl overflow-hidden aspect-[3/4] group cursor-pointer bg-gray-100" onclick="document.getElementById('hero-brand').value='BMW'; triggerHeroSearch();">
-                    <img src="images/BMWM3 (1).jpg" alt="BMW" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90">
+                <div class="relative rounded-2xl md:rounded-3xl overflow-hidden aspect-[3/4] group cursor-pointer bg-gray-100" onclick="searchByCategory('Sedan')">
+                    <img src="images/VWS (1).jpg" alt="Sedan" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90">
                     <div class="absolute inset-0 bg-gradient-to-b from-black/40 to-transparent"></div>
                     <div class="absolute top-4 left-4 md:top-6 md:left-6">
-                        <h3 class="text-white font-heading font-bold text-base md:text-2xl leading-tight">BMW</h3>
+                        <h3 class="text-white font-heading font-bold text-base md:text-2xl leading-tight">Sedan</h3>
                     </div>
                     <div class="absolute bottom-4 right-4 md:bottom-6 md:right-6 w-6 h-6 md:w-8 md:h-8 rounded-full bg-white text-black flex items-center justify-center shadow-lg">
                         <i class="fas fa-arrow-right text-[10px] md:text-xs transform -rotate-45"></i>
                     </div>
                 </div>
 
-                <div class="relative rounded-2xl md:rounded-3xl overflow-hidden aspect-[3/4] group cursor-pointer bg-gray-100" onclick="document.getElementById('hero-brand').value='Volkswagen'; triggerHeroSearch();">
-                    <img src="images/VWS (1).jpg" alt="VW" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90">
+                <div class="relative rounded-2xl md:rounded-3xl overflow-hidden aspect-[3/4] group cursor-pointer bg-gray-100" onclick="searchByCategory('Performance')">
+                    <img src="images/BMWM3 (1).jpg" alt="Performance" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90">
                     <div class="absolute inset-0 bg-gradient-to-b from-black/40 to-transparent"></div>
                     <div class="absolute top-4 left-4 md:top-6 md:left-6">
-                        <h3 class="text-white font-heading font-bold text-base md:text-2xl leading-tight">VW<br>Arteon</h3>
+                        <h3 class="text-white font-heading font-bold text-base md:text-2xl leading-tight">Performance</h3>
                     </div>
                     <div class="absolute bottom-4 right-4 md:bottom-6 md:right-6 w-6 h-6 md:w-8 md:h-8 rounded-full bg-white text-black flex items-center justify-center shadow-lg">
                         <i class="fas fa-arrow-right text-[10px] md:text-xs transform -rotate-45"></i>
                     </div>
                 </div>
 
-                <div class="relative rounded-2xl md:rounded-3xl overflow-hidden aspect-[3/4] group cursor-pointer bg-gray-100" onclick="navigateTo('fleet', event)">
+                <div class="relative rounded-2xl md:rounded-3xl overflow-hidden aspect-[3/4] group cursor-pointer bg-gray-100" onclick="searchByCategory('Luxury')">
                     <img src="images/MBS63 (2).jpg" alt="Luxury" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90">
                     <div class="absolute inset-0 bg-gradient-to-b from-black/40 to-transparent"></div>
                     <div class="absolute top-4 left-4 md:top-6 md:left-6">
-                        <h3 class="text-white font-heading font-bold text-base md:text-2xl leading-tight">Luxury<br>Class</h3>
+                        <h3 class="text-white font-heading font-bold text-base md:text-2xl leading-tight">Luxury</h3>
                     </div>
                     <div class="absolute bottom-4 right-4 md:bottom-6 md:right-6 w-6 h-6 md:w-8 md:h-8 rounded-full bg-white text-black flex items-center justify-center shadow-lg">
                         <i class="fas fa-arrow-right text-[10px] md:text-xs transform -rotate-45"></i>
@@ -346,6 +346,11 @@
                         <div class="relative w-full md:w-64 bg-white rounded-lg md:rounded-xl shadow-sm px-3 md:px-4">
                             <select id="car-brand-filter" class="w-full h-full bg-transparent text-xs md:text-sm font-bold text-gray-900 focus:outline-none py-3 md:py-4 appearance-none cursor-pointer" style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%236b7280%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.4-5.4-13z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 0 center; background-size: 0.65em auto;">
                                 <option value="">All Brands</option>
+                            </select>
+                        </div>
+                        <div class="relative w-full md:w-64 bg-white rounded-lg md:rounded-xl shadow-sm px-3 md:px-4">
+                            <select id="car-category-filter" class="w-full h-full bg-transparent text-xs md:text-sm font-bold text-gray-900 focus:outline-none py-3 md:py-4 appearance-none cursor-pointer" style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%236b7280%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.4-5.4-13z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 0 center; background-size: 0.65em auto;">
+                                <option value="">All Categories</option>
                             </select>
                         </div>
                     </div>
@@ -538,7 +543,7 @@
         // --- Car Data (Added USD Price Back In) ---
         const cars = [
             {
-                id: 1, title: "Mercedes-AMG G63", make: "Mercedes-Benz", priceKsh: "KSH 38,500,000", priceUsd: "$265,000 USD",
+                id: 1, title: "Mercedes-AMG G63", make: "Mercedes-Benz", category: "SUV", priceKsh: "KSH 38,500,000", priceUsd: "$265,000 USD",
                 desc: "Command the road with the G63. Features the Night Package, 22-inch forged wheels, and diamond-stitched Nappa leather.",
                 cardImage: "images/gwagonhome (2).png", bgClass: "bg-gray-100", 
                 images: ["images/GWAGON 1 (1).jpeg", "images/GWAGON 1 (2).jpeg", "images/GWAGON 1 (3).jpeg"],
@@ -546,7 +551,7 @@
                 specs: { year: "2021", mileage: "3,500 kms", trans: "Auto", engine: "4.0L V8" }
             },
             {
-                id: 4, title: "Mercedes-Benz S63 AMG", make: "Mercedes-Benz", priceKsh: "KSH 14,151,450", priceUsd: "$98,500 USD",
+                id: 4, title: "Mercedes-Benz S63 AMG", make: "Mercedes-Benz", category: "Luxury", priceKsh: "KSH 14,151,450", priceUsd: "$98,500 USD",
                 desc: "The pinnacle of performance luxury. Unmatched comfort with earth-shattering power.",
                 cardImage: "images/MBS63HM.png", bgClass: "bg-gray-100",
                 images: ["images/MBS63 (1).jpg", "images/MBS63 (2).jpg", "images/MBS63 (3).jpg", "images/MBS63 (4).jpg"],
@@ -554,7 +559,7 @@
                 specs: { year: "2019", mileage: "28,000 kms", trans: "Auto", engine: "4.0L V8" }
             },
             {
-                id: 5, title: "VW Arteon R-Line", make: "Volkswagen", priceKsh: "KSH 6,278,750", priceUsd: "$43,500 USD",
+                id: 5, title: "VW Arteon R-Line", make: "Volkswagen", category: "Sedan", priceKsh: "KSH 6,278,750", priceUsd: "$43,500 USD",
                 desc: "The avant-garde Gran Turismo. Sleek fastback silhouette with dynamic performance.",
                 cardImage: "images/VWSHM.png", bgClass: "bg-card-blue", 
                 images: ["images/VWS (1).jpg", "images/VWS (2).jpg", "images/VWS (3).jpg"],
@@ -562,7 +567,7 @@
                 specs: { year: "2021", mileage: "74,200 kms", trans: "Auto", engine: "2.0L TSI" }
             },
             {
-                id: 6, title: "BMW M3 Competition", make: "BMW", priceKsh: "KSH 11,400,000", priceUsd: "$79,000 USD",
+                id: 6, title: "BMW M3 Competition", make: "BMW", category: "Performance", priceKsh: "KSH 11,400,000", priceUsd: "$79,000 USD",
                 desc: "The icon of sports sedans. Track-ready performance with aggressive styling.",
                 cardImage: "images/BMWM3HM (1).png", bgClass: "bg-gray-100",
                 images: ["images/BMWM3 (1).jpg", "images/BMWM3 (2).jpg", "images/BMWM3 (3).jpg"],
@@ -643,11 +648,15 @@
         function applyFilters() {
             const searchTerm = document.getElementById('car-search').value.toLowerCase();
             const selectedBrand = document.getElementById('car-brand-filter').value;
+            const selectedCategory = document.getElementById('car-category-filter') ? document.getElementById('car-category-filter').value : "";
 
             let filteredCars = cars.filter(car => {
-                const matchesSearch = car.title.toLowerCase().includes(searchTerm) || car.make.toLowerCase().includes(searchTerm);
+                const matchesSearch = car.title.toLowerCase().includes(searchTerm) || 
+                                      car.make.toLowerCase().includes(searchTerm) || 
+                                      (car.category && car.category.toLowerCase().includes(searchTerm));
                 const matchesBrand = selectedBrand === "" || car.make === selectedBrand;
-                return matchesSearch && matchesBrand;
+                const matchesCategory = selectedCategory === "" || car.category === selectedCategory;
+                return matchesSearch && matchesBrand && matchesCategory;
             });
             renderSearchGrid(filteredCars);
         }
@@ -660,6 +669,14 @@
                 option.value = brand; option.textContent = brand;
                 if(modalSelect) modalSelect.appendChild(option);
             });
+            
+            const categories = [...new Set(cars.filter(c => c.category).map(car => car.category))].sort();
+            const catSelect = document.getElementById('car-category-filter');
+            categories.forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat; option.textContent = cat;
+                if(catSelect) catSelect.appendChild(option);
+            });
         }
 
         function triggerHeroSearch() {
@@ -669,6 +686,14 @@
             openInventoryModal();
             document.getElementById('car-search').value = heroSearchVal;
             document.getElementById('car-brand-filter').value = heroBrandVal;
+            applyFilters();
+        }
+        
+        function searchByCategory(category) {
+            openInventoryModal();
+            document.getElementById('car-search').value = '';
+            document.getElementById('car-brand-filter').value = '';
+            if (document.getElementById('car-category-filter')) document.getElementById('car-category-filter').value = category;
             applyFilters();
         }
 
@@ -754,6 +779,7 @@
         // --- Event Listeners ---
         document.getElementById('car-search').addEventListener('keyup', applyFilters);
         document.getElementById('car-brand-filter').addEventListener('change', applyFilters);
+        if (document.getElementById('car-category-filter')) document.getElementById('car-category-filter').addEventListener('change', applyFilters);
 
         document.addEventListener('keydown', function (event) {
             if (event.key === 'Escape') {
